@@ -2,7 +2,7 @@
 Daily task is a website that I can use to manage my everyday task
 
 # environment config 环境配置
-## config flask environment on mac
+(mac only at the momentpy)
 
 * 打开~/.bashrc文件，并添加如下：
 ~~~shell script
@@ -35,4 +35,16 @@ workon dailytask
 
 # 5. 安装包
 pip3 install -r requirements.txt 
+~~~
+
+## 开发相关环境变量
+
+~~~shell script
+# 开启调试模式，这样浏览器上会显示错误信息
+export FLASK_ENV=development
+~~~
+
+## 启动
+~~~shell script
+flask run
 ~~~
