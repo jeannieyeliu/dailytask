@@ -130,3 +130,5 @@ dmypy.json
 
 # ides
 .idea/
+.DS_Store
+*.webp

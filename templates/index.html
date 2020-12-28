@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ name }}的每日任务与奖励</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
 </head>
 <body>
-    <h2>{{ name }}的每日任务与奖励</h2>
+    <h2>
+        <img alt="Avatar"  class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
+        {{ name }}的每日任务与奖励
+    </h2>
     {# 使用 length 过滤器获取 movies 变量的长度 #}
-    <p>2020年12月28日 周一</p>
-    <p>{{ tasks|length }} 个任务</p>
-    <ul>
+    <p>{{ tasks|length }} 个任务 (2020年12月28日 周一)</p>
+    <ul class="task-list">
         {% for task in tasks %}  {# 迭代 tasks 变量 #}
         <li> <input type="checkbox" name="state" value="{{task.id}}" {{task.state}}/>
             {% if task.state == "checked" %}
@@ -22,8 +26,9 @@
         </li>  {# 等同于 task['title'] #}
         {% endfor %}  {# 使用 endfor 标签结束 for 语句 #}
     </ul>
+    <img alt="Walking Totoro" class="totoro"  src="{{ url_for('static', filename='images/calendar.png') }}">
     <footer>
-        <small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></small>
+        <small>&copy; 2021 <a href="https://github.com/jeannieyeliu/dailytask">Jeannie Liu</a> </small>
 	</footer>
 </body>
 </html>

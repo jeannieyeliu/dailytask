@@ -5,16 +5,16 @@ app = Flask(__name__)
 # fake data
 name = 'Jeannie Liu'
 tasks = [
-    {'id': '1', 'title': 'My Neighbor Totoro', 'estimate': '1988', 'state': 'checked'},
-    {'id': '2', 'title': 'Dead Poets Society', 'estimate': '1989', 'state': 'checked'},
-    {'id': '3', 'title': 'A Perfect World', 'estimate': '1993', 'state': 'checked'},
-    {'id': '4', 'title': 'Leon', 'estimate': '1994', 'state': ''},
-    {'id': '5', 'title': 'Mahjong', 'estimate': '1996', 'state': 'checked'},
-    {'id': '6', 'title': 'Swallowtail Butterfly', 'estimate': '1996', 'state': ''},
-    {'id': '7', 'title': 'King of Comedy', 'estimate': '1999', 'state': ''},
-    {'id': '8', 'title': 'Devils on the Doorstep', 'estimate': '1999', 'state': ''},
-    {'id': '9', 'title': 'WALL-E', 'estimate': '2008', 'state': ''},
-    {'id': '0', 'title': 'The Pork of Music', 'estimate': '2012', 'state': 'checked'}
+    {'id': '1', 'title': '洗衣服', 'estimate': '15分钟', 'state': 'checked'},
+    {'id': '2', 'title': '看Flask', 'estimate': '30 分钟', 'state': 'checked'},
+    {'id': '3', 'title': '冥想', 'estimate': '30 分钟', 'state': 'checked'},
+    {'id': '4', 'title': 'keep运动', 'estimate': '60 分钟', 'state': ''},
+    {'id': '5', 'title': 'Ted', 'estimate': '15 分钟', 'state': 'checked'},
+    {'id': '6', 'title': '刷LeetCode', 'estimate': '10 分钟', 'state': ''},
+    {'id': '7', 'title': '敷面膜', 'estimate': '15 分钟', 'state': ''},
+    {'id': '8', 'title': '素描', 'estimate': '30 分钟', 'state': ''},
+    {'id': '9', 'title': '看电影《教父3》', 'estimate': '30 分钟', 'state': ''},
+    {'id': '0', 'title': '读书《梦的解析》', 'estimate': '30 分钟', 'state': 'checked'}
 ]
 
 
