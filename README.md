@@ -42,9 +42,14 @@ pip3 install -r requirements.txt
 ~~~shell script
 # 开启调试模式，这样浏览器上会显示错误信息
 export FLASK_ENV=development
+touch .env .flaskenv
 ~~~
 
 ## 启动
 ~~~shell script
+set FLASK_APP=hello.py
 flask run
 ~~~
+
+# 部署
+

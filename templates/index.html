@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }}的每日任务与奖励</title>
+</head>
+<body>
+    <h2>{{ name }}的每日任务与奖励</h2>
+    {# 使用 length 过滤器获取 movies 变量的长度 #}
+    <p>2020年12月28日 周一</p>
+    <p>{{ tasks|length }} 个任务</p>
+    <ul>
+        {% for task in tasks %}  {# 迭代 tasks 变量 #}
+        <li> <input type="checkbox" name="state" value="{{task.id}}" {{task.state}}/>
+            {% if task.state == "checked" %}
+            <del>
+            {% endif %}
+            {{ task.title }} - {{ task.estimate }}
+            {% if task.state == "checked" %}
+            </del>
+            {% endif %}
+        </li>  {# 等同于 task['title'] #}
+        {% endfor %}  {# 使用 endfor 标签结束 for 语句 #}
+    </ul>
+    <footer>
+        <small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></small>
+	</footer>
+</body>
+</html>
