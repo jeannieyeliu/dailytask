@@ -17,12 +17,14 @@
         {% for task in tasks %}  {# 迭代 tasks 变量 #}
         <li> <input type="checkbox" name="state" value="{{task.id}}" {{task.state}}/>
             {% if task.state == "checked" %}
-            <del>
+            <del><span class="done-task">
             {% endif %}
-            {{ task.title }} - {{ task.estimate }}
+            {{ task.title }} - {{ task.estimate }} 分钟
             {% if task.state == "checked" %}
-            </del>
+            </del></span>
             {% endif %}
+
+            <span class="tag">{{ task.tag}}</span>
         </li>  {# 等同于 task['title'] #}
         {% endfor %}  {# 使用 endfor 标签结束 for 语句 #}
     </ul>

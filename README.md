@@ -45,11 +45,19 @@ export FLASK_ENV=development
 touch .env .flaskenv
 ~~~
 
+# 创建数据库
+~~~shell script
+flask shell
+>>> from app import db
+>>> db.create_all()
+~~~
+
 ## 启动
 ~~~shell script
 set FLASK_APP=hello.py
 flask run
 ~~~
+
 
 # 部署
 

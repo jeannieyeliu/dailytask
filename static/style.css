@@ -46,3 +46,15 @@ footer {
     margin: 0 auto;
     height: 100px;
 }
+
+.tag {
+    color: gray;
+    background: lightblue;
+    margin-left: 5px;
+    padding: 5px;
+
+}
+
+.done-task {
+    color: gray;
+}
