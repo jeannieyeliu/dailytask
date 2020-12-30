@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul class="task-list">
+        <li>
+            矮哟！ 你要找的页面飞到火星上去了呢 ^_^ - 404
+            <span class="float-right">
+                <a href="{{ url_for('index') }}">滚回去！</a>
+            </span>
+        </li>
+    </ul>
+    <footer>
+        <small>&copy; 2018 <a href="http://helloflask.com/tutorial">HelloFlask</a></small>
+	</footer>
+</body>
+</html>

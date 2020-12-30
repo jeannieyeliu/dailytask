@@ -52,11 +52,13 @@ def forge():
     user = User(name=name)
     db.session.add(user)
     for m in tasks:
-        task = Task(title=m['title'], estimate=m['estimate'], state=m['state'], tag=m['tag'] or '', date=datetime.date.today())
+        task = Task(title=m['title'], estimate=m['estimate'], state=m['state'], tag=m['tag'] or '',
+                    date=datetime.date.today())
         db.session.add(task)
 
     db.session.commit()
     click.echo('Done.')
+
 
 # fake data
 user = User.query.first()
@@ -97,3 +99,15 @@ def test_url_for():
     print(url_for('hello'))
     print(url_for('user_page', name='jeannie liu'))
     return 'Test page'
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    user = User.query.first()
+    return render_template('404.html'), 404
+
+
+@app.context_processor
+def inject_user():
+    user = User.query.first()
+    return dict(user=user)
