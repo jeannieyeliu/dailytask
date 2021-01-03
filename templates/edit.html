@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>编辑任务</h3>
+<form method="post">
+    <table>
+        <tr>
+            <td>任务内容：</td>
+            <td><input type="text" name="title" autocomplete="off" required value="{{task.title}}"></td>
+        </tr>
+        <tr>
+            <td>估算时间：</td>
+            <td><input type="text" name="estimate" autocomplete="off" required value="{{task.estimate}}">分钟</td>
+        </tr>
+        <tr>
+            <td>标签：</td>
+            <td><input type="text" name="tag" autocomplete="off" required value="{{task.tag}}"></td>
+        </tr>
+    </table>
+    <input class="btn" type="submit" name="submit" value="更新任务">
+
+    <input class="btn" name="cancel" value="取消">
+</form>
+{% endblock %}

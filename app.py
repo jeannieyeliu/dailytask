@@ -1,10 +1,11 @@
-from flask import Flask, escape, url_for, render_template
+from flask import Flask, escape, url_for, render_template, redirect, flash, request
 from flask_sqlalchemy import SQLAlchemy
 import os, click, datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控
+app.config['SECRET_KEY'] = 'dev'
 db = SQLAlchemy(app)
 
 
@@ -63,7 +64,7 @@ def forge():
 # fake data
 user = User.query.first()
 name = "Jack Liu" if not user else user.name;
-tasks = Task.query.all()
+
 """[
     {'id': '1', 'title': '洗衣服', 'estimate': 10, 'state': 'checked', 'tag': '家务'},
     {'id': '2', 'title': '看Flask', 'estimate': 10, 'state': 'checked'},
@@ -83,10 +84,67 @@ def hello():
     return '<h1>欢迎来到每日任务与奖励!</h1><img src="http://helloflask.com/totoro.gif">'
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+# @app.route('/index')
 def index():
+    if request.method == 'POST':
+        title = request.form.get('title');
+        estimate = request.form.get('estimate');
+        tag = request.form.get('tag');
+        date = datetime.date.today()
+        if not title or not estimate:
+            flash('输入有误')
+            return redirect(url_for('index'))
+        task = Task(title=title, estimate=estimate, state='', tag=tag,
+                    date=date)
+        db.session.add(task)
+        db.session.commit()
+        flash('任务添加成功！')
+        return redirect(url_for('index'))
+    tasks = Task.query.all()
     return render_template('index.html', name=name, tasks=tasks)
+
+
+@app.route('/task/edit/<int:task_id>', methods=['GET', 'POST'])
+def edit(task_id):
+    task = Task.query.get_or_404(task_id)
+
+    if request.method == 'POST':  # 处理编辑表单的提交请求
+        title = request.form['title']
+        estimate = request.form['estimate']
+        tag = request.form['tag']
+
+        if not title or not estimate:
+            flash('输入有误.')
+            return redirect(url_for('edit', task_id=task_id))  # 重定向回对应的编辑页面
+
+        task.title = title  # 更新标题
+        task.estimate = estimate
+        task.tag = tag
+        task.date = datetime.date.today()
+        db.session.commit()  # 提交数据库会话
+        flash('修改成功！.')
+        return redirect(url_for('index'))  # 重定向回主页
+
+    return render_template('edit.html', task=task)  # 传入被编辑的电影记录
+
+
+@app.route('/task/delete/<int:task_id>', methods=['POST'])
+def delete(task_id):
+    task = Task.query.get_or_404(task_id)
+    title = task.title
+    db.session.delete(task)
+    db.session.commit()
+    flash("成功删除任务'" + title + "'.")
+    return redirect(url_for('index'))
+
+
+@app.route('/task/done/<task_id>/<state>', methods=['POST', 'GET'])
+def done(task_id, state):
+    task = Task.query.get_or_404(int(task_id))
+    task.state = "checked" if state == "true" else "";
+    db.session.commit()
+    return redirect(url_for('index'))
 
 
 @app.route('/user/<name>')
@@ -111,3 +169,4 @@ def page_not_found(e):
 def inject_user():
     user = User.query.first()
     return dict(user=user)
+

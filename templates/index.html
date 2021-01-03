@@ -1,30 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {# 使用 length 过滤器获取 tasks 变量的长度 #}
-    <p>{{ tasks|length }} 个任务 (2020年12月28日 周一)</p>
-    <ul class="task-list">
-        {% for task in tasks %}  {# 迭代 tasks 变量 #}
-        <li> <input type="checkbox" name="state" value="{{task.id}}" {{task.state}}/>
-            {% if task.state == "checked" %}
-            <del>
-                <span class="done-task">
-            {% endif %}
+{# 使用 length 过滤器获取 tasks 变量的长度 #}
+<script>
 
-            {{ task.title }} - ({{ task.estimate }} 分钟)
-            {% if task.state == "checked" %}
-                </span>
-            </del>
-            {% endif %}
+</script>
+<p>{{ tasks|length }} 个任务 (2020年12月28日 周一)</p>
+<form method="post">
+    <table>
+        <tr>
+            <td>任务内容：</td>
+            <td><input type="text" name="title" autocomplete="off" required></td>
+        </tr>
+        <tr>
+            <td>估算时间：</td>
+            <td><input type="text" name="estimate" autocomplete="off" required>分钟</td>
+        </tr>
+        <tr>
+            <td>标签：</td>
+            <td><input type="text" name="tag" autocomplete="off" required></td>
+        </tr>
+    </table>
+    <input class="btn" type="submit" name="submit" value="添加任务">
+</form>
+<ul class="task-list">
+    {% for task in tasks %} {# 迭代 tasks 变量 #}
+    <li>
+        <input type="checkbox" name="state" value="{{task.id}}" {{task.state}}
+               onclick='window.location.href="/task/done/" + this.value + "/" + this.checked'/>
 
-            <span class="float-right">
-                {{ task.tag}}
+        {% if task.state == "checked" %}
+        <del>
+            <span class="done-task">
+        {% endif %}
+
+        {{ task.title }} - ({{ task.estimate }} 分钟)
+        {% if task.state == "checked" %}
             </span>
+        </del>
+        {% endif %}
 
-        </li>  {# 等同于 task['title'] #}
-        {% endfor %}  {# 使用 endfor 标签结束 for 语句 #}
-    </ul>
-    <img alt="Walking Totoro" class="totoro"  src="{{ url_for('static', filename='images/calendar.png') }}">
+        <span class="float-right">
+            <a class="btn" href="{{ url_for('edit', task_id=task.id) }}">修改</a>
+            <form class="inline-form" method="post" action="{{ url_for('delete', task_id=task.id) }}">
+                <input class="btn" type="submit" name="delete" href="{{ url_for('delete', task_id=task.id) }}" value="删除"/>
+            </form>
+            <span class=" tag">{{ task.tag}}</span>
+        </span>
 
-</body>
+    </li>
+    {# 等同于 task['title'] #}
+    {% endfor %} {# 使用 endfor 标签结束 for 语句 #}
+</ul>
+<img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/calendar.png') }}">
+
 {% endblock %}

@@ -10,6 +10,9 @@
     {% endblock %}
 </head>
 <body>
+    {% for message in get_flashed_messages() %}
+        <div class="alert">{{message}}</div>
+    {% endfor %}
     <h2>
         <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
         {{ user.name }}的每日任务与奖励
@@ -17,6 +20,15 @@
     <nav>
         <ul>
             <li><a href="{{ url_for('index') }}">首页</a></li>
+            <li><a href="{{ url_for('index') }}">添加任务</a></li>
+            <li><a href="{{ url_for('index') }}">导入模板</a></li>
+            {% if user.name %}
+            <li class="float-right"><a href="{{ url_for('index') }}">退出</a></li>
+            {% endif %}
+            {% if not user.name %}
+            <li class="float-right"><a href="{{ url_for('index') }}">登录</a></li>
+            {% endif %}
+
         </ul>
     </nav>
     {% block content %}
